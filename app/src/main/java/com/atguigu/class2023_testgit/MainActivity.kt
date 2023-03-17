@@ -12,7 +12,10 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnAdd.setOnClickListener {
-            binding.tvNumber.text="${number++}"
+            binding.tvNumber.text="${++number}"
+        }
+        binding.btnSubtract.setOnClickListener {
+            binding.tvNumber.text="${--number}"
         }
     }
 }
