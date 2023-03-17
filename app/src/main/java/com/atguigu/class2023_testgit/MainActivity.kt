@@ -3,6 +3,7 @@ package com.atguigu.class2023_testgit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.atguigu.class2023_testgit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -31,5 +32,13 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("NUMBER",number)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==R.id.menuReset){
+            number=0
+            binding.tvNumber.text="$number"
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
