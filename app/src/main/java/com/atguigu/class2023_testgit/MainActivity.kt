@@ -2,6 +2,7 @@ package com.atguigu.class2023_testgit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import com.atguigu.class2023_testgit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,5 +18,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnSubtract.setOnClickListener {
             binding.tvNumber.text="${--number}"
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
