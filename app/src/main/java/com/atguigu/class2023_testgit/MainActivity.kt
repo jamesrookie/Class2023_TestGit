@@ -12,6 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        number=savedInstanceState?.getInt("NUMBER")?:0
+        binding.tvNumber.text="$number"
+
         binding.btnAdd.setOnClickListener {
             binding.tvNumber.text="${++number}"
         }
@@ -23,5 +26,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("NUMBER",number)
     }
 }
