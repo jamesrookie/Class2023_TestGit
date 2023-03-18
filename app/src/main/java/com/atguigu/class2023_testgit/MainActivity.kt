@@ -1,26 +1,29 @@
 package com.atguigu.class2023_testgit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.atguigu.class2023_testgit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
-    private var number:Int=0
+    private lateinit var myViewModel:MyViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        number=savedInstanceState?.getInt("NUMBER")?:0
-        binding.tvNumber.text="$number"
+        myViewModel=ViewModelProvider(this).get(MyViewModel::class.java)
+        myViewModel.numberLiveData.observe(this,{
+            binding.tvNumber.text=it.toString()
+        })
 
         binding.btnAdd.setOnClickListener {
-            binding.tvNumber.text="${++number}"
+            myViewModel.add(1)
         }
         binding.btnSubtract.setOnClickListener {
-            binding.tvNumber.text="${--number}"
+            myViewModel.add(-1)
         }
     }
 
@@ -29,15 +32,9 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("NUMBER",number)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId==R.id.menuReset){
-            number=0
-            binding.tvNumber.text="$number"
+            myViewModel.reset()
         }
         return super.onOptionsItemSelected(item)
     }
