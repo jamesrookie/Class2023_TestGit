@@ -15,14 +15,15 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         myViewModel=ViewModelProvider(this).get(MyViewModel::class.java)
-        myViewModel.number=savedInstanceState?.getInt("NUMBER")?:0
-        binding.tvNumber.text="${myViewModel.number}"
+        myViewModel.numberLiveData.observe(this,{
+            binding.tvNumber.text=it.toString()
+        })
 
         binding.btnAdd.setOnClickListener {
-            binding.tvNumber.text="${++myViewModel.number}"
+            myViewModel.add(1)
         }
         binding.btnSubtract.setOnClickListener {
-            binding.tvNumber.text="${--myViewModel.number}"
+            myViewModel.add(-1)
         }
     }
 
@@ -31,15 +32,9 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("NUMBER",myViewModel.number)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId==R.id.menuReset){
-            myViewModel.number=0
-            binding.tvNumber.text="${myViewModel.number}"
+            myViewModel.reset()
         }
         return super.onOptionsItemSelected(item)
     }
